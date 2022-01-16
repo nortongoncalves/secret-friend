@@ -18,6 +18,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
+    'no-useless-constructor': 'off',
     'react/jsx-props-no-spreading': 'off',
     'prettier/prettier': 'error',
     'class-methods-use-this': 'off',
