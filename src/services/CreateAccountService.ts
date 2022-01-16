@@ -1,5 +1,6 @@
 import { User } from '../entities/User';
-import { CreateUuid } from '../providers/CreateUuid/CreateUuid';
+import { GenerateEncryption } from '../providers/Encrypt/GenerateEncryption';
+import { CreateUuid } from '../providers/Uuid/CreateUuid';
 import { UserRepository } from '../repositories/user/UserRepository';
 import {
   CreateAccountInput,
@@ -10,7 +11,8 @@ import {
 export class CreateAccountService implements CreateAccount {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly createUuid: CreateUuid
+    private readonly createUuid: CreateUuid,
+    private readonly generateEncryption: GenerateEncryption
   ) {}
 
   async exec({
@@ -18,17 +20,21 @@ export class CreateAccountService implements CreateAccount {
     password,
   }: CreateAccountInput): Promise<CreateAccountOutput> {
     const id = await this.createUuid.exec();
-    const user = new User({
-      id,
-      email,
-      password,
-    });
-
     const findedEmail = await this.userRepository.getByEmail(email);
 
     if (findedEmail) {
       throw new Error('Account already exist');
     }
+
+    const generateEncryptionResponse = await this.generateEncryption.exec({
+      password,
+    });
+
+    const user = new User({
+      id,
+      email,
+      password: generateEncryptionResponse.password,
+    });
 
     await this.userRepository.save(user);
 
