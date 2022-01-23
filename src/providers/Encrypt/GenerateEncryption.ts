@@ -1,11 +1,11 @@
-export type GenerateEncryptionInput = {
+export type GenerateEncryptionParams = {
   password: string;
 };
 
-export type GenerateEncryptionOutput = {
+export type GenerateEncryptionResponse = {
   password: string;
 };
 
 export interface GenerateEncryption {
-  exec(params: GenerateEncryptionInput): Promise<GenerateEncryptionOutput>;
+  exec(params: GenerateEncryptionParams): Promise<GenerateEncryptionResponse>;
 }

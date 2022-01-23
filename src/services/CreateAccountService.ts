@@ -3,8 +3,8 @@ import { GenerateEncryption } from '../providers/Encrypt/GenerateEncryption';
 import { CreateUuid } from '../providers/Uuid/CreateUuid';
 import { UserRepository } from '../repositories/user/UserRepository';
 import {
-  CreateAccountInput,
-  CreateAccountOutput,
+  CreateAccountParams,
+  CreateAccountResponse,
   CreateAccount,
 } from '../usecases/CreateAccount';
 
@@ -18,12 +18,12 @@ export class CreateAccountService implements CreateAccount {
   async exec({
     login: email,
     password,
-  }: CreateAccountInput): Promise<CreateAccountOutput> {
+  }: CreateAccountParams): Promise<CreateAccountResponse> {
     const id = await this.createUuid.exec();
     const findedEmail = await this.userRepository.getByEmail(email);
 
     if (findedEmail) {
-      throw new Error('Account already exist');
+      throw new Error('Email já registrado');
     }
 
     const generateEncryptionResponse = await this.generateEncryption.exec({
@@ -38,7 +38,7 @@ export class CreateAccountService implements CreateAccount {
 
     await this.userRepository.save(user);
 
-    const output: CreateAccountOutput = {
+    const output: CreateAccountResponse = {
       id,
       login: email,
     };

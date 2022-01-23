@@ -1,17 +1,18 @@
-import { CreateUuid } from './mocks/CreateUuidMock';
+import { CreateUuid } from '../mocks/CreateUuidMock';
 import { CreateAccountService } from '../../../src/services/CreateAccountService';
-import { UserRepositorySpy } from './mocks/UserRepositorySpy';
-import { GenerateEncryption } from './mocks/GenerateEncryption';
+import { UserRepositorySpy } from '../mocks/UserRepositorySpy';
+import { GenerateEncryptionMock } from '../mocks/GenerateEncryptionMock';
+import { CreateAccount } from '../../../src/usecases/CreateAccount';
 
-type makeSutOutput = {
-  sut: CreateAccountService;
+type makeSutResponse = {
+  sut: CreateAccount;
   userRepository: UserRepositorySpy;
 };
 
-const makeSut = (): makeSutOutput => {
+const makeSut = (): makeSutResponse => {
   const userRepository = new UserRepositorySpy();
   const createUuid = new CreateUuid();
-  const generateEncryption = new GenerateEncryption();
+  const generateEncryption = new GenerateEncryptionMock();
   const sut = new CreateAccountService(
     userRepository,
     createUuid,

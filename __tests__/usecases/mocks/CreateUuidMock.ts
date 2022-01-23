@@ -1,4 +1,4 @@
-import { CreateUuid as ICreateUuid } from '../../../../src/providers/Uuid/CreateUuid';
+import { CreateUuid as ICreateUuid } from '../../../src/providers/Uuid/CreateUuid';
 
 export class CreateUuid implements ICreateUuid {
   async exec(): Promise<string> {

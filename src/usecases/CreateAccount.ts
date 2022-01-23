@@ -1,13 +1,13 @@
 export interface CreateAccount {
-  exec(params: CreateAccountInput): Promise<CreateAccountOutput>;
+  exec(params: CreateAccountParams): Promise<CreateAccountResponse>;
 }
 
-export type CreateAccountInput = {
+export type CreateAccountParams = {
   login: string;
   password: string;
 };
 
-export type CreateAccountOutput = {
+export type CreateAccountResponse = {
   id: string;
   login: string;
 };
