@@ -18,18 +18,18 @@ export class CreateSessionService implements CreateSession {
     email,
     password,
   }: CreateSessionParams): Promise<CreateSessionResponse> {
-    const findedUser = await this.userRepository.getByEmail(email);
-    if (!findedUser) throw new Error('Conta não encontrada');
+    const foundUser = await this.userRepository.getByEmail(email);
+    if (!foundUser) throw new Error('Conta não encontrada');
     const responseGenerateEncryption = await this.generateEncryption.exec({
       password,
     });
 
-    if (responseGenerateEncryption.password !== findedUser.password) {
+    if (responseGenerateEncryption.password !== foundUser.password) {
       throw new Error('email ou senha incorreta');
     }
 
     const token = await this.createToken.exec({
-      id: findedUser.id,
+      id: foundUser.id,
     });
 
     return token;

@@ -20,9 +20,9 @@ export class CreateAccountService implements CreateAccount {
     password,
   }: CreateAccountParams): Promise<CreateAccountResponse> {
     const id = await this.createUuid.exec();
-    const findedEmail = await this.userRepository.getByEmail(email);
+    const foundEmail = await this.userRepository.getByEmail(email);
 
-    if (findedEmail) {
+    if (foundEmail) {
       throw new Error('Email já registrado');
     }
 

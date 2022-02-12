@@ -2,9 +2,9 @@
 
 ## Casos de uso para criar uma conta
 
-1) O usuario deve conseguir se cadastrar informando apenas um login (email) e uma senha
+1) O usuário deve conseguir se cadastrar informando apenas um login (email) e uma senha
 
-2) Não deve ser possivel ter duas contas com o mesmo email
+2) Não deve ser possível ter duas contas com o mesmo email
 
-3) a seha do usuario deve ser criptografada
+3) a senha do usuário deve ser criptografada
 

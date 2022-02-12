@@ -2,7 +2,7 @@
 
 ## Casos de uso
 
-1) Permitir o usuario logar-se com a conta criada
+1) Permitir o usuário logar-se com a conta criada
 
 2) não permitir logar com uma conta inexistente
 
