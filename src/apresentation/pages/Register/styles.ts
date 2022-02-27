@@ -11,10 +11,10 @@ export const styles = StyleSheet.create({
   icon: {
     marginBottom: 60,
   },
-  titleView: {
+  viewTitle: {
     alignSelf: 'flex-start',
     width: '100%',
-    borderBottomColor: colors.red,
+    borderBottomColor: colors.yellow,
     borderBottomWidth: 1,
     marginBottom: 40,
   },
@@ -22,39 +22,13 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'left',
-    color: colors.red,
+    color: colors.yellow,
   },
   formView: {
     width: '100%',
   },
-  footerContainer: {
-    flex: 0.1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    borderTopWidth: 1,
-    borderTopColor: colors.gray,
-  },
-  textButtonGroup: {
-    flexDirection: 'row',
-    marginTop: 15,
-  },
-  firstTextBottom: {
-    fontSize: 14,
-    color: colors.dark_gray,
-    marginRight: 5,
-  },
-  secondTextBottom: {
-    fontSize: 14,
-    color: colors.purple_transparent,
-  },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  forgotPasswordText: {
-    marginTop: 15,
-    textAlign: 'right',
-    color: colors.dark_gray,
-    fontSize: 14,
   },
 });

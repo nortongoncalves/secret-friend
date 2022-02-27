@@ -8,4 +8,6 @@ export const colors = {
   dark_gray: '#7C7C7C',
   purple_transparent: 'rgba(116,27,245,0.50)',
   gray: '#C0C0C0',
+  yellow: '#F5C65D',
+  yellow_transparent: 'rgba(245,198,93,0.50)',
 };
