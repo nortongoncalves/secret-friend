@@ -1,7 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { InputWithIcon, InputWithIconParams } from '../InputWithIcon';
+/* eslint-disable react/function-component-definition */
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  useEffect,
+  useState,
+} from 'react';
+import InputWithIcon, {
+  InputWithIconParams,
+  InputWithIconForwardRefOutput,
+} from '../InputWithIcon';
 
-export function InputPasswordWithBackground(props: InputWithIconParams) {
+const InputPasswordWithIcon: ForwardRefRenderFunction<
+  InputWithIconForwardRefOutput,
+  InputWithIconParams
+> = (props, ref) => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [nameIconPasswordInput, setNameIconPasswordInput] =
     useState('eye-off-outline');
@@ -18,10 +30,12 @@ export function InputPasswordWithBackground(props: InputWithIconParams) {
   return (
     <InputWithIcon
       {...props}
+      ref={ref}
       secureTextEntry={secureTextEntry}
       onPressIcon={changeSecureTextEntry}
       nameIcon={nameIconPasswordInput}
-      useIcon
     />
   );
-}
+};
+
+export default forwardRef(InputPasswordWithIcon);

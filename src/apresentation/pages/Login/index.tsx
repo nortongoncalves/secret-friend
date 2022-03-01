@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from '@react-navigation/native';
 import Logo from '../../../assets/logo.svg';
 import { styles } from './styles';
 import { colors } from '../../styles/colors';
-import { InputWithIcon } from '../../components/Inputs/plugins/InputWithIcon';
+import InputWithIcon, {
+  InputWithIconForwardRefOutput,
+} from '../../components/Inputs/plugins/InputWithIcon';
 import { ButtonTouchableOpacity } from '../../components/Buttons/ButtonTouchableOpacity';
-import { InputPasswordWithBackground } from '../../components/Inputs/plugins/InputPasswordWithBackground';
+import InputPasswordWithIcon from '../../components/Inputs/plugins/InputPasswordWithIcon';
 
 export function Login() {
+  const loginInputRef = useRef<InputWithIconForwardRefOutput>(null);
+  const passwordInputRef = useRef<InputWithIconForwardRefOutput>(null);
+
+  const submit = () => {
+    const login = loginInputRef.current?.value;
+    const password = passwordInputRef.current?.value;
+    console.log('login: ', login, ' password: ', password);
+  };
+
+  const handleSubmitLoginInput = () => {
+    passwordInputRef.current?.focus();
+  };
+
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -31,11 +46,15 @@ export function Login() {
             autoComplete="email"
             marginBottom={15}
             nameIcon="email-outline"
-            useIcon
+            ref={loginInputRef}
+            returnKeyType="next"
+            onSubmitEditing={handleSubmitLoginInput}
           />
-          <InputPasswordWithBackground
+          <InputPasswordWithIcon
             placeholder="Senha"
             autoComplete="password"
+            ref={passwordInputRef}
+            onSubmitEditing={submit}
           />
           <Link to={{ screen: 'Login' }} style={styles.forgotPasswordText}>
             Esqueceu a senha ?
@@ -44,7 +63,7 @@ export function Login() {
             <ButtonTouchableOpacity
               marginTop={50}
               text="Entrar"
-              onPress={() => console.log('clicou no botão entrar')}
+              onPress={submit}
             />
           </View>
         </View>
