@@ -1,11 +1,11 @@
-import { CreateSessionService } from '../../../src/services/CreateSessionService';
-import { CreateSession } from '../../../src/usecases/CreateSession';
+import { CreateSession } from '../../../src/data/usecases/CreateSession';
+import { CreateSession as ICreateSession } from '../../../src/domain/usecases/CreateSession';
 import { CreateTokenMock } from '../mocks/CreateTokenMock';
 import { GenerateEncryptionMock } from '../mocks/GenerateEncryptionMock';
 import { UserRepositorySpy } from '../mocks/UserRepositorySpy';
 
 type makeSutResponse = {
-  sut: CreateSession;
+  sut: ICreateSession;
   userRepository: UserRepositorySpy;
 };
 
@@ -13,7 +13,7 @@ const makeSut = (): makeSutResponse => {
   const userRepository = new UserRepositorySpy();
   const generateEncryption = new GenerateEncryptionMock();
   const createToken = new CreateTokenMock();
-  const sut = new CreateSessionService(
+  const sut = new CreateSession(
     userRepository,
     generateEncryption,
     createToken

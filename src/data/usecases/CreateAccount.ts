@@ -1,14 +1,14 @@
-import { User } from '../entities/User';
-import { GenerateEncryption } from '../providers/Encrypt/GenerateEncryption';
-import { CreateUuid } from '../providers/Uuid/CreateUuid';
+import { User } from '../../domain/entities/User';
+import { GenerateEncryption } from '../drivers/Encrypt/GenerateEncryption';
+import { CreateUuid } from '../drivers/Uuid/CreateUuid';
 import { UserRepository } from '../repositories/user/UserRepository';
 import {
   CreateAccountParams,
   CreateAccountResponse,
-  CreateAccount,
-} from '../usecases/CreateAccount';
+  CreateAccount as ICreateAccount,
+} from '../../domain/usecases/CreateAccount';
 
-export class CreateAccountService implements CreateAccount {
+export class CreateAccount implements ICreateAccount {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly createUuid: CreateUuid,

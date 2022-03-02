@@ -1,11 +1,11 @@
 import { CreateUuid } from '../mocks/CreateUuidMock';
-import { CreateAccountService } from '../../../src/services/CreateAccountService';
+import { CreateAccount } from '../../../src/data/usecases/CreateAccount';
 import { UserRepositorySpy } from '../mocks/UserRepositorySpy';
 import { GenerateEncryptionMock } from '../mocks/GenerateEncryptionMock';
-import { CreateAccount } from '../../../src/usecases/CreateAccount';
+import { CreateAccount as ICreateAccount } from '../../../src/domain/usecases/CreateAccount';
 
 type makeSutResponse = {
-  sut: CreateAccount;
+  sut: ICreateAccount;
   userRepository: UserRepositorySpy;
 };
 
@@ -13,11 +13,7 @@ const makeSut = (): makeSutResponse => {
   const userRepository = new UserRepositorySpy();
   const createUuid = new CreateUuid();
   const generateEncryption = new GenerateEncryptionMock();
-  const sut = new CreateAccountService(
-    userRepository,
-    createUuid,
-    generateEncryption
-  );
+  const sut = new CreateAccount(userRepository, createUuid, generateEncryption);
   return {
     sut,
     userRepository,

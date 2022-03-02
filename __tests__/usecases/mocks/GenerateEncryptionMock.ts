@@ -2,7 +2,7 @@ import {
   GenerateEncryption as IGenerateEncryption,
   GenerateEncryptionParams,
   GenerateEncryptionResponse,
-} from '../../../src/providers/Encrypt/GenerateEncryption';
+} from '../../../src/data/drivers/Encrypt/GenerateEncryption';
 
 export class GenerateEncryptionMock implements IGenerateEncryption {
   async exec(

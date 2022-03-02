@@ -1,13 +1,13 @@
-import { GenerateEncryption } from '../providers/Encrypt/GenerateEncryption';
-import { CreateToken } from '../providers/Token/CreateToken';
+import { GenerateEncryption } from '../drivers/Encrypt/GenerateEncryption';
+import { CreateToken } from '../drivers/Token/CreateToken';
 import { UserRepository } from '../repositories/user/UserRepository';
 import {
-  CreateSession,
+  CreateSession as ICreateSession,
   CreateSessionResponse,
   CreateSessionParams,
-} from '../usecases/CreateSession';
+} from '../../domain/usecases/CreateSession';
 
-export class CreateSessionService implements CreateSession {
+export class CreateSession implements ICreateSession {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly generateEncryption: GenerateEncryption,

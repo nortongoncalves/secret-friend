@@ -2,7 +2,7 @@ import {
   CreateToken,
   CreateTokenParams,
   CreateTokenResponse,
-} from '../../../src/providers/Token/CreateToken';
+} from '../../../src/data/drivers/Token/CreateToken';
 
 export class CreateTokenMock implements CreateToken {
   async exec({ id }: CreateTokenParams): Promise<CreateTokenResponse> {
