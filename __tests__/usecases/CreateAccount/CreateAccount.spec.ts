@@ -1,7 +1,7 @@
-import { CreateUuid } from '../mocks/CreateUuidMock';
+import { CreateUuid } from '../../mocks/CreateUuidMock';
 import { CreateAccount } from '../../../src/data/usecases/CreateAccount';
-import { UserRepositorySpy } from '../mocks/UserRepositorySpy';
-import { GenerateEncryptionMock } from '../mocks/GenerateEncryptionMock';
+import { UserRepositorySpy } from '../../mocks/UserRepositorySpy';
+import { GenerateEncryptionMock } from '../../mocks/GenerateEncryptionMock';
 import { CreateAccount as ICreateAccount } from '../../../src/domain/usecases/CreateAccount';
 
 type makeSutResponse = {

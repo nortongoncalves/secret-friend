@@ -8,5 +8,5 @@ export type CreateSessionResponse = {
 };
 
 export interface CreateSession {
-  exec(params: CreateSessionParams): Promise<CreateSessionResponse>;
+  exec: (params: CreateSessionParams) => Promise<CreateSessionResponse>;
 }

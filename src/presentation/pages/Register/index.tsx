@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,26 +10,31 @@ import InputWithIcon, {
 } from '../../components/Inputs/plugins/InputWithIcon';
 import { ButtonTouchableOpacity } from '../../components/Buttons/ButtonTouchableOpacity';
 import InputPasswordWithBackground from '../../components/Inputs/plugins/InputPasswordWithIcon';
+import { CreateAccount } from '../../../domain/usecases/CreateAccount';
+import { RegisterFactoryParams } from '../../../main/factories/pages/Register';
+import { validateConfirmPasswords } from '../../utils/validateConfirmPasswords';
+import { validateInvalidForm } from '../../utils/validateInvalidForm';
 
-export function Register() {
+export type props = RegisterFactoryParams & {
+  createAccount: CreateAccount;
+};
+
+export function Register({ createAccount, navigation }: props) {
   const emailInputRef = useRef<InputWithIconForwardRefOutput>(null);
   const passwordInputRef = useRef<InputWithIconForwardRefOutput>(null);
   const confirmPasswordInputRef = useRef<InputWithIconForwardRefOutput>(null);
 
-  const validaConfirmPassword = () => {
-    const password = passwordInputRef.current?.value;
-    const confirmPassword = confirmPasswordInputRef.current?.value;
+  const validateConfirmPasswordsFactory = () => {
+    validateConfirmPasswords({
+      confirmPasswordInputRef,
+      passwordInputRef,
+    });
+  };
 
-    if (String(password) === String(confirmPassword)) {
-      confirmPasswordInputRef.current?.setError(false);
-      confirmPasswordInputRef.current?.setMessageError('');
-      return;
-    }
-
-    confirmPasswordInputRef.current?.setError(true);
-    confirmPasswordInputRef.current?.setMessageError(
-      'As senhas estão diferentes'
-    );
+  const validateInvalidFormFactory = () => {
+    return validateInvalidForm({
+      inputsRefs: [emailInputRef, passwordInputRef, confirmPasswordInputRef],
+    });
   };
 
   const handleSubmitEmailInput = () => {
@@ -40,43 +45,27 @@ export function Register() {
     confirmPasswordInputRef.current?.focus();
   };
 
-  const someEmptyInputs = () => {
-    const auxObject = [
-      emailInputRef.current?.value,
-      passwordInputRef.current?.value,
-      confirmPasswordInputRef.current?.value,
-    ];
-    return auxObject.some((value) => value === '' || value === undefined);
-  };
-
-  const invalidForm = (): boolean | undefined => {
-    emailInputRef.current?.blur();
-    passwordInputRef.current?.blur();
-    confirmPasswordInputRef.current?.blur();
-    return (
-      emailInputRef.current?.onError ||
-      passwordInputRef.current?.onError ||
-      confirmPasswordInputRef.current?.onError ||
-      someEmptyInputs()
-    );
-  };
-
-  const submit = () => {
-    if (invalidForm() === true) {
+  const submit = async () => {
+    if (validateInvalidFormFactory() === true) {
       return;
     }
 
     const login = emailInputRef.current?.value;
     const password = passwordInputRef.current?.value;
-    const confirmPassword = confirmPasswordInputRef.current?.value;
-    console.log(
-      'login: ',
-      login,
-      ' password: ',
-      password,
-      ' confirmPassword: ',
-      confirmPassword
-    );
+
+    if (!login || !password) {
+      return;
+    }
+
+    try {
+      const response = await createAccount.exec({
+        login,
+        password,
+      });
+      navigation.navigate('Login', response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -104,6 +93,7 @@ export function Register() {
             ref={emailInputRef}
             returnKeyType="next"
             onSubmitEditing={handleSubmitEmailInput}
+            required
           />
           <InputPasswordWithBackground
             placeholder="Senha"
@@ -112,16 +102,18 @@ export function Register() {
             marginBottom={15}
             ref={passwordInputRef}
             returnKeyType="next"
-            onTextInput={validaConfirmPassword}
+            onTextInput={validateConfirmPasswordsFactory}
             onSubmitEditing={handleSubmitPasswordInput}
+            required
           />
           <InputPasswordWithBackground
             placeholder="Confirmar a senha"
             autoComplete="password"
             backgroundColor={colors.yellow_transparent}
             ref={confirmPasswordInputRef}
-            onTextInput={validaConfirmPassword}
+            onTextInput={validateConfirmPasswordsFactory}
             onSubmitEditing={submit}
+            required
           />
           <View style={styles.buttonContainer}>
             <ButtonTouchableOpacity

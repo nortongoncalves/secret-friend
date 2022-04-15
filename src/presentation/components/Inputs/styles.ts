@@ -12,7 +12,7 @@ export const createStyles = ({
     input: {
       color: colors.white_text_color,
       fontWeight: '700',
-      height: 40,
+      minHeight: 40,
       marginBottom: 0,
       backgroundColor: 'transparent',
       flex: 0.9,

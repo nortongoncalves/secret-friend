@@ -1,7 +1,7 @@
 import { User } from '../../domain/entities/User';
 import { GenerateEncryption } from '../drivers/Encrypt/GenerateEncryption';
 import { CreateUuid } from '../drivers/Uuid/CreateUuid';
-import { UserRepository } from '../repositories/user/UserRepository';
+import { UserRepository } from '../../domain/repositories/user/UserRepository';
 import {
   CreateAccountParams,
   CreateAccountResponse,
@@ -27,13 +27,13 @@ export class CreateAccount implements ICreateAccount {
     }
 
     const generateEncryptionResponse = await this.generateEncryption.exec({
-      password,
+      value: password,
     });
 
     const user = new User({
       id,
       email,
-      password: generateEncryptionResponse.password,
+      password: generateEncryptionResponse.encryptedValue,
     });
 
     await this.userRepository.save(user);

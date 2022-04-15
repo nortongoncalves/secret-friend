@@ -1,5 +1,6 @@
 export type CreateTokenParams = {
   id: string;
+  expiresIn?: number;
 };
 
 export type CreateTokenResponse = {
@@ -7,5 +8,5 @@ export type CreateTokenResponse = {
 };
 
 export interface CreateToken {
-  exec(params: CreateTokenParams): Promise<CreateTokenResponse>;
+  exec: (params: CreateTokenParams) => Promise<CreateTokenResponse>;
 }

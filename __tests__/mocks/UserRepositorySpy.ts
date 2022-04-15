@@ -2,7 +2,7 @@ import {
   UserRepository,
   UserRepositoryParams,
   UserRepositoryResponse,
-} from '../../../src/data/repositories/user/UserRepository';
+} from '../../src/domain/repositories/user/UserRepository';
 
 export class UserRepositorySpy implements UserRepository {
   callsCount = 0;

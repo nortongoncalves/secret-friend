@@ -1,8 +1,8 @@
 import { CreateSession } from '../../../src/data/usecases/CreateSession';
 import { CreateSession as ICreateSession } from '../../../src/domain/usecases/CreateSession';
-import { CreateTokenMock } from '../mocks/CreateTokenMock';
-import { GenerateEncryptionMock } from '../mocks/GenerateEncryptionMock';
-import { UserRepositorySpy } from '../mocks/UserRepositorySpy';
+import { CreateTokenMock } from '../../mocks/CreateTokenMock';
+import { GenerateEncryptionMock } from '../../mocks/GenerateEncryptionMock';
+import { UserRepositorySpy } from '../../mocks/UserRepositorySpy';
 
 type makeSutResponse = {
   sut: ICreateSession;
@@ -79,7 +79,7 @@ describe('CreateSession', () => {
     ).rejects.toBeInstanceOf(Error);
   });
 
-  it('should be able to create a session and return a token along with a userid', async () => {
+  it('should be able to create a session and return a token along with a user_id', async () => {
     const { sut, userRepository } = makeSut();
     userRepository.data = [
       {

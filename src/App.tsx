@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar, StatusBarProps } from 'expo-status-bar';
-import { Routers } from './routers';
+import { Routers } from './main/routers';
 
 export default function App() {
   const statusBarProps: StatusBarProps = {

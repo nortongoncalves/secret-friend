@@ -1,3 +1,3 @@
 export interface CreateUuid {
-  exec(): Promise<string>;
+  exec: () => Promise<string>;
 }

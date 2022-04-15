@@ -1,5 +1,5 @@
 export interface CreateAccount {
-  exec(params: CreateAccountParams): Promise<CreateAccountResponse>;
+  exec: (params: CreateAccountParams) => Promise<CreateAccountResponse>;
 }
 
 export type CreateAccountParams = {

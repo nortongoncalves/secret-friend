@@ -9,12 +9,17 @@ interface ButtonTouchableOpacityParams
 
 export function ButtonTouchableOpacity({
   text,
+  activeOpacity = 0.5,
   ...props
 }: ButtonTouchableOpacityParams) {
   const styles = createStyles(props);
 
   return (
-    <TouchableOpacity style={styles.button} {...props}>
+    <TouchableOpacity
+      style={styles.button}
+      activeOpacity={activeOpacity}
+      {...props}
+    >
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );

@@ -16,6 +16,7 @@ export type InputWithIconParams = InputParams &
   StylesParams & {
     onPressIcon?: () => void | undefined;
     nameIcon?: string;
+    required?: boolean;
   };
 
 export type InputWithIconForwardRefOutput = {
@@ -31,7 +32,7 @@ export type InputWithIconForwardRefOutput = {
 const InputWithIcon: ForwardRefRenderFunction<
   InputWithIconForwardRefOutput,
   InputWithIconParams
-> = ({ onPressIcon, nameIcon = '', ...props }, ref) => {
+> = ({ onPressIcon, nameIcon = '', required = false, ...props }, ref) => {
   const inputRef = useRef<TextInput>(null);
   const [inputValue, setInputValue] = useState<string>('');
   const [onError, setOnError] = useState<boolean>(false);
@@ -54,6 +55,17 @@ const InputWithIcon: ForwardRefRenderFunction<
     setOnMessageError(value);
   };
 
+  const verifyRequiredValue = (value: string) => {
+    const inputWithError = onError && onMessageError !== 'Campo Obrigatório';
+    if (required === false || inputWithError) return;
+    if (value) {
+      setError(false);
+    } else {
+      setError(true);
+      setMessageError('Campo Obrigatório');
+    }
+  };
+
   useImperativeHandle(ref, () => {
     return {
       blur,
@@ -72,7 +84,10 @@ const InputWithIcon: ForwardRefRenderFunction<
         <Input
           {...props}
           ref={inputRef}
-          onChangeText={(value) => setInputValue(value)}
+          onChangeText={(value) => {
+            setInputValue(value);
+            verifyRequiredValue(value);
+          }}
         />
         <Icon
           style={styles.icon}

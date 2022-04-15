@@ -1,6 +1,6 @@
 import { GenerateEncryption } from '../drivers/Encrypt/GenerateEncryption';
 import { CreateToken } from '../drivers/Token/CreateToken';
-import { UserRepository } from '../repositories/user/UserRepository';
+import { UserRepository } from '../../domain/repositories/user/UserRepository';
 import {
   CreateSession as ICreateSession,
   CreateSessionResponse,
@@ -21,10 +21,10 @@ export class CreateSession implements ICreateSession {
     const foundUser = await this.userRepository.getByEmail(email);
     if (!foundUser) throw new Error('Conta não encontrada');
     const responseGenerateEncryption = await this.generateEncryption.exec({
-      password,
+      value: password,
     });
 
-    if (responseGenerateEncryption.password !== foundUser.password) {
+    if (responseGenerateEncryption.encryptedValue !== foundUser.password) {
       throw new Error('email ou senha incorreta');
     }
 
