@@ -10,15 +10,46 @@ import InputWithIcon, {
 } from '../../components/Inputs/plugins/InputWithIcon';
 import { ButtonTouchableOpacity } from '../../components/Buttons/ButtonTouchableOpacity';
 import InputPasswordWithIcon from '../../components/Inputs/plugins/InputPasswordWithIcon';
+import { validateInvalidForm } from '../../utils/validateInvalidForm';
+import { CreateSession } from '../../../domain/usecases/CreateSession';
+import { LoginFactoryParams } from '../../../main/factories/pages/Login';
 
-export function Login() {
+export type LoginProps = LoginFactoryParams & {
+  createSession: CreateSession;
+};
+
+export function Login({ createSession }: LoginProps) {
   const loginInputRef = useRef<InputWithIconForwardRefOutput>(null);
   const passwordInputRef = useRef<InputWithIconForwardRefOutput>(null);
 
-  const submit = () => {
+  const validateInvalidFormFactory = () => {
+    return validateInvalidForm({
+      inputsRefs: [loginInputRef, passwordInputRef],
+    });
+  };
+
+  const submit = async () => {
+    if (validateInvalidFormFactory() === true) {
+      return;
+    }
+
     const login = loginInputRef.current?.value;
     const password = passwordInputRef.current?.value;
-    console.log('login: ', login, ' password: ', password);
+
+    if (!login || !password) {
+      return;
+    }
+
+    try {
+      const response = await createSession.exec({
+        email: login,
+        password,
+      });
+      console.log('response: ', response);
+      // navigation.navigate('Login', response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSubmitLoginInput = () => {
@@ -49,12 +80,14 @@ export function Login() {
             ref={loginInputRef}
             returnKeyType="next"
             onSubmitEditing={handleSubmitLoginInput}
+            required
           />
           <InputPasswordWithIcon
             placeholder="Senha"
             autoComplete="password"
             ref={passwordInputRef}
             onSubmitEditing={submit}
+            required
           />
           <Link to={{ screen: 'Login' }} style={styles.forgotPasswordText}>
             Esqueceu a senha ?

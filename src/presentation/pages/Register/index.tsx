@@ -15,11 +15,11 @@ import { RegisterFactoryParams } from '../../../main/factories/pages/Register';
 import { validateConfirmPasswords } from '../../utils/validateConfirmPasswords';
 import { validateInvalidForm } from '../../utils/validateInvalidForm';
 
-export type props = RegisterFactoryParams & {
+export type RegisterProps = RegisterFactoryParams & {
   createAccount: CreateAccount;
 };
 
-export function Register({ createAccount, navigation }: props) {
+export function Register({ createAccount, navigation }: RegisterProps) {
   const emailInputRef = useRef<InputWithIconForwardRefOutput>(null);
   const passwordInputRef = useRef<InputWithIconForwardRefOutput>(null);
   const confirmPasswordInputRef = useRef<InputWithIconForwardRefOutput>(null);
