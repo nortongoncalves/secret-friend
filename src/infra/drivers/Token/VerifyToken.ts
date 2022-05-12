@@ -1,15 +1,15 @@
-import { JwtPayload, verify } from 'jsonwebtoken';
+import JWT from 'expo-jwt';
 import { REACT_APP_SECRET_TOKEN } from 'react-native-dotenv';
 import {
   VerifyToken as InterfaceVerifyToken,
   VerifyTokenParams,
 } from '../../../data/drivers/Token/VerifyToken';
 
-export type IVerifyToken = InterfaceVerifyToken<string | JwtPayload>;
+export type IVerifyToken = InterfaceVerifyToken<string, any>;
 
 export class VerifyToken implements IVerifyToken {
   async exec({ token }: VerifyTokenParams) {
-    const decode = verify(token, REACT_APP_SECRET_TOKEN);
+    const decode = JWT.decode(token, REACT_APP_SECRET_TOKEN);
     return {
       decode,
     };
